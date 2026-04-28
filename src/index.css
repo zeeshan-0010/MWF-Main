@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-brand-blue: #003366;
+  --color-brand-green: #2E8B57;
+  --color-brand-orange: #FF7F50;
+  --color-brand-paper: #F9F9F7;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-paper text-slate-900 min-h-screen antialiased;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(0, 51, 102, 0.03) 0, transparent 50%), 
+      radial-gradient(at 100% 100%, rgba(46, 139, 87, 0.03) 0, transparent 50%);
+    background-attachment: fixed;
+  }
+  
+  h1, h2, h3 {
+    @apply font-serif tracking-tight;
+  }
+}
+
+@layer components {
+  /* Premium Glassmorphism */
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-sm rounded-[2rem] transition-all duration-300;
+  }
+  
+  .glass-card-hover {
+    @apply hover:shadow-xl hover:bg-white/85 hover:scale-[1.005];
+  }
+
+  /* 8px Grid Utility Classes */
+  .p-grid { @apply p-2 md:p-4 lg:p-8; }
+  .m-grid { @apply m-2 md:m-4 lg:m-8; }
+  .gap-grid { @apply gap-2 md:gap-4 lg:gap-8; }
+
+  /* Standard Buttons */
+  .btn-primary {
+    @apply px-8 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] bg-brand-blue text-white shadow-lg shadow-brand-blue/20 hover:shadow-brand-blue/30 transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2;
+  }
+
+  .btn-success {
+    @apply px-8 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] bg-brand-green text-white shadow-lg shadow-brand-green/20 hover:shadow-brand-green/30 transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2;
+  }
+
+  .btn-warning {
+    @apply px-8 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] bg-brand-orange text-white shadow-lg shadow-brand-orange/20 hover:shadow-brand-orange/30 transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2;
+  }
+
+  .btn-outline {
+    @apply px-8 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] bg-transparent border border-gray-200 text-brand-blue hover:bg-white hover:shadow-sm transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2;
+  }
+}

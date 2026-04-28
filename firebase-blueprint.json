@@ -1,0 +1,312 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Registered member profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "bio": { "type": "string" },
+        "role": { "type": "string", "enum": ["donor", "volunteer", "beneficiary", "ngo_partner", "member", "moderator", "admin", "super_admin", "ngo_staff", "csr", "strategic_partner", "campaign_supporter", "public_supporter"] },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected", "suspended", "under_review"] },
+        "phoneNumber": { "type": "string" },
+        "reputation": { "type": "number" },
+        "provider": { "type": "string", "enum": ["google", "email", "phone"] },
+        "panNumber": { "type": "string" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "availableDays": { "type": "array", "items": { "type": "string" } },
+        "location": { "type": "string" },
+        "profession": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "email", "role"]
+    },
+    "Update": {
+      "title": "Foundation Update",
+      "description": "A real-time update shared by a member",
+      "type": "object",
+      "properties": {
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorPhoto": { "type": "string" },
+        "authorRole": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "imageUrl": { "type": "string" },
+        "likesCount": { "type": "number" },
+        "likedBy": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["content", "authorId", "authorName", "createdAt"]
+    },
+    "ReportedUpdate": {
+      "title": "Reported Update",
+      "description": "Information about a post flagged by a user",
+      "type": "object",
+      "properties": {
+        "updateId": { "type": "string" },
+        "reporterId": { "type": "string" },
+        "reporterName": { "type": "string" },
+        "reason": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["updateId", "reporterId", "reason", "createdAt"]
+    },
+    "Campaign": {
+      "title": "Welfare Campaign",
+      "description": "A specific mission or project",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "targetAmount": { "type": "number" },
+        "currentAmount": { "type": "number" },
+        "category": { "type": "string", "enum": ["Education", "Food", "Health", "Disaster Relief"] },
+        "imageUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "completed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "description", "targetAmount", "currentAmount", "category", "status"]
+    },
+    "Donation": {
+      "title": "Donation Record",
+      "description": "A record of a financial contribution",
+      "type": "object",
+      "properties": {
+        "campaignId": { "type": "string" },
+        "amount": { "type": "number" },
+        "donorName": { "type": "string" },
+        "donorId": { "type": "string" },
+        "isAnonymous": { "type": "boolean" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["amount", "donorName", "createdAt"]
+    },
+    "GalleryImage": {
+      "title": "Impact Photo",
+      "description": "A photo documenting foundation work",
+      "type": "object",
+      "properties": {
+        "url": { "type": "string" },
+        "caption": { "type": "string" },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["url", "createdAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Alerts for users",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["info", "success", "warning", "alert"] },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "message", "type", "read", "createdAt"]
+    },
+    "Volunteer": {
+      "title": "Volunteer Record",
+      "description": "Registration for events",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "eventId": { "type": "string" },
+        "hours": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "verified", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "eventId", "status", "createdAt"]
+    },
+    "NGOProfile": {
+      "title": "NGO Profile",
+      "description": "Details of registered NGO partners",
+      "type": "object",
+      "properties": {
+        "ngoId": { "type": "string" },
+        "ngoName": { "type": "string" },
+        "registrationNumber": { "type": "string" },
+        "contactPerson": { "type": "string" },
+        "website": { "type": "string" },
+        "approvalStatus": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ngoName", "registrationNumber", "approvalStatus"]
+    },
+    "BeneficiaryRequest": {
+      "title": "Beneficiary Request",
+      "description": "A request for help from a beneficiary",
+      "type": "object",
+      "properties": {
+        "beneficiaryId": { "type": "string" },
+        "requestType": { "type": "string", "enum": ["Education", "Medical", "Food", "Financial", "Emergency", "Shelter"] },
+        "description": { "type": "string" },
+        "documents": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected", "fast_track"] },
+        "priority": { "type": "string", "enum": ["low", "medium", "high", "emergency"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["beneficiaryId", "requestType", "description", "status"]
+    },
+    "VolunteerTask": {
+      "title": "Volunteer Task",
+      "description": "A task assigned to a volunteer",
+      "type": "object",
+      "properties": {
+        "volunteerId": { "type": "string" },
+        "campaignId": { "type": "string" },
+        "taskName": { "type": "string" },
+        "description": { "type": "string" },
+        "assignedDate": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["assigned", "in_progress", "completed", "cancelled"] }
+      },
+      "required": ["taskName", "status"]
+    },
+    "AidApplication": {
+      "title": "Scholarship / Medical Aid",
+      "description": "Special support application",
+      "type": "object",
+      "properties": {
+        "beneficiaryId": { "type": "string" },
+        "aidType": { "type": "string", "enum": ["Scholarship", "Medical Aid"] },
+        "requiredAmount": { "type": "number" },
+        "verificationStatus": { "type": "string", "enum": ["pending", "verified", "failed"] },
+        "approvalStatus": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["beneficiaryId", "aidType", "requiredAmount", "approvalStatus"]
+    },
+    "Collaboration": {
+      "title": "NGO Collaboration",
+      "description": "Partnership request between NGO and Foundation",
+      "type": "object",
+      "properties": {
+        "ngoId": { "type": "string" },
+        "ngoName": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "type": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ngoId", "title", "status"]
+    },
+    "Event": {
+      "title": "Community Event",
+      "description": "Scheduled activity for volunteers",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "location": { "type": "string" },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "date", "location"]
+    },
+    "Comment": {
+      "title": "Update Comment",
+      "description": "A comment on a community update",
+      "type": "object",
+      "properties": {
+        "updateId": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorPhoto": { "type": "string" },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["updateId", "authorId", "content"]
+    },
+    "Activity": {
+      "title": "User Activity",
+      "description": "Log of user actions for the feed",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userPhoto": { "type": "string" },
+        "details": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "userId", "userName"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "updates/{updateId}": {
+      "schema": "Update",
+      "description": "Community updates and news"
+    },
+    "comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Comments on updates"
+    },
+    "activities/{activityId}": {
+      "schema": "Activity",
+      "description": "User activity logs"
+    },
+    "campaigns/{campaignId}": {
+      "schema": "Campaign",
+      "description": "Active foundation missions"
+    },
+    "events/{eventId}": {
+      "schema": "Event",
+      "description": "Volunteer events"
+    },
+    "collaborations/{collabId}": {
+      "schema": "Collaboration",
+      "description": "Partnership requests"
+    },
+    "donations/{donationId}": {
+      "schema": "Donation",
+      "description": "Record of contributions"
+    },
+    "gallery/{imageId}": {
+      "schema": "GalleryImage",
+      "description": "Visual record of impact"
+    },
+    "notifications/{notifId}": {
+      "schema": "Notification",
+      "description": "User notifications"
+    },
+    "volunteers/{volunteerId}": {
+      "schema": "Volunteer",
+      "description": "Volunteer hours and status"
+    },
+    "reported_updates/{reportId}": {
+      "schema": "ReportedUpdate",
+      "description": "User reports for updates"
+    },
+    "impact_stats/global": {
+      "schema": "object",
+      "description": "Aggregated foundation impact numbers"
+    },
+    "ngo_profiles/{ngoId}": {
+      "schema": "NGOProfile",
+      "description": "NGO partner profiles"
+    },
+    "beneficiary_requests/{requestId}": {
+      "schema": "BeneficiaryRequest",
+      "description": "Help requests from beneficiaries"
+    },
+    "volunteer_tasks/{taskId}": {
+      "schema": "VolunteerTask",
+      "description": "Tasks for volunteers"
+    },
+    "aid_applications/{aidId}": {
+      "schema": "AidApplication",
+      "description": "Scholarship and medical aid applications"
+    }
+  }
+}
